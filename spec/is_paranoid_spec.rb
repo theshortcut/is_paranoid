@@ -83,4 +83,9 @@ describe Android do
       Android.create!(:name => 'R2D2')
     }.should raise_error(ActiveRecord::RecordInvalid)
   end
+  
+  it "should find only destroyed videos" do
+    @r2d2.destroy
+    Android.find_only_destroyed(:all).should == [@r2d2]
+  end
 end

@@ -41,6 +41,11 @@ module IsParanoid
         def self.find_with_destroyed *args
           self.with_exclusive_scope { find(*args) }
         end
+        
+        # Perofm a find only on destroyed instances
+        def self.find_only_destroyed *args
+          self.with_only_destroyed_scope { find(*args) }
+        end
 
         # Mark the model deleted_at as now.
         def destroy_without_callbacks
@@ -66,6 +71,14 @@ module IsParanoid
           self.deleted_at_will_change!
           self.deleted_at = nil
           update_without_callbacks
+        end
+        
+        protected
+        
+        def self.with_only_destroyed_scope(&block)
+          with_exclusive_scope do
+            with_scope({:find => { :conditions => ["deleted_at IS NOT NULL"] }}, &block)
+          end
         end
       end
     end
