@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 
 class Person < ActiveRecord::Base
   has_many :androids, :foreign_key => :owner_id, :dependent => :destroy
@@ -35,7 +35,7 @@ describe Android do
   it "should handle Model.destroy(id) properly" do
     lambda{
       Android.destroy(@r2d2.id)
-    }.should change(Android, :count).from(2).to(1)
+    }.should change(Android, :count).by(-1)
 
     Android.count_with_destroyed.should == 2
   end
@@ -64,7 +64,7 @@ describe Android do
   it "should mark deleted on dependent destroys" do
     lambda{
       @luke.destroy
-    }.should change(Android, :count).from(2).to(0)
+    }.should change(Android, :count).by(-2)
     Android.count_with_destroyed.should == 2
   end
 
@@ -72,7 +72,7 @@ describe Android do
     @r2d2.destroy
     lambda{
       @r2d2.restore
-    }.should change(Android, :count).from(1).to(2)
+    }.should change(Android, :count).by(1)
   end
 
   # Note:  this isn't necessarily ideal, this just serves to demostrate

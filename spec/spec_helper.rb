@@ -1,14 +1,28 @@
-require 'rubygems'
-require "#{File.dirname(__FILE__)}/../lib/is_paranoid"
-require 'activerecord'
 require 'yaml'
-require 'spec'
+require 'activerecord'
+require 'is_paranoid'
+require 'stringio'
 
-def connect(environment)
-  conf = YAML::load(File.open(File.dirname(__FILE__) + '/database.yml'))
-  ActiveRecord::Base.establish_connection(conf[environment])
+# ActiveRecord::Base.logger = Logger.new(STDOUT)
+ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+
+old_stdout = $stdout
+$stdout = StringIO.new
+
+begin
+  ActiveRecord::Schema.define do
+    create_table :androids do |t|
+      t.string   :name
+      t.integer  :owner_id
+      t.datetime :deleted_at
+      t.timestamps
+    end
+
+    create_table :people do |t|
+      t.string   :name
+      t.timestamps
+    end
+  end
+ensure
+  $stdout = old_stdout
 end
-
-# Open ActiveRecord connection
-connect('test')
-load(File.dirname(__FILE__) + "/schema.rb")

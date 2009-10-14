@@ -9,15 +9,13 @@ Gem::Specification.new do |s|
   s.date = %q{2009-03-20}
   s.email = %q{jeff@semanticart.com}
   s.files = [
+    "init.rb",
     "lib/is_paranoid.rb",
     "README.textile",
     "Rakefile",
     "MIT-LICENSE",
-    "spec/android_spec.rb",
-    "spec/database.yml",
-    "spec/spec.opts",
+    "spec/is_paranoid_spec.rb",
     "spec/spec_helper.rb",
-    "spec/schema.rb"
   ]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/jchupp/is_paranoid/}
