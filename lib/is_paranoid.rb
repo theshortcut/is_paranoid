@@ -44,7 +44,8 @@ module IsParanoid
 
         # Mark the model deleted_at as now.
         def destroy_without_callbacks
-          self.update_attribute(:deleted_at, Time.now.utc)
+          self.deleted_at = Time.now.utc
+          update_without_callbacks
         end
 
         # Override the default destroy to allow us to flag deleted_at.
@@ -62,7 +63,9 @@ module IsParanoid
         # Set deleted_at flag on a model to nil, effectively undoing the
         # soft-deletion.
         def restore
-          self.update_attribute(:deleted_at, nil)
+          self.deleted_at_will_change!
+          self.deleted_at = nil
+          update_without_callbacks
         end
       end
     end
