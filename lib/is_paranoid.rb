@@ -47,12 +47,6 @@ module IsParanoid
           self.with_only_destroyed_scope { find(*args) }
         end
 
-        # Mark the model deleted_at as now.
-        def destroy_without_callbacks
-          self.deleted_at = Time.now.utc
-          update_without_callbacks
-        end
-
         # Override the default destroy to allow us to flag deleted_at.
         # This preserves the before_destroy and after_destroy callbacks.
         # Because this is also called internally by Model.destroy_all and
@@ -74,6 +68,12 @@ module IsParanoid
         end
         
         protected
+
+        # Mark the model deleted_at as now.
+        def destroy_without_callbacks
+          self.deleted_at = Time.now.utc
+          update_without_callbacks
+        end
         
         def self.with_only_destroyed_scope(&block)
           with_exclusive_scope do
