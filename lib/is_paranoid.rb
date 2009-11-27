@@ -1,4 +1,4 @@
-require 'activerecord'
+require 'active_record'
 
 module IsParanoid
   def self.included(base) # :nodoc:
