@@ -25,11 +25,12 @@ module IsParanoid
         # this method is called internally by Model.delete(id) and on the
         # delete method in each instance, we don't need to specify those
         # methods separately
-        def self.delete_all conditions = nil
-          self.with_exclusive_scope do
-            super conditions
-          end
-        end
+        ## FIXME: this is dangerous. find a better solution
+        # def self.delete_all conditions = nil
+        #   self.with_exclusive_scope do
+        #     super conditions
+        #   end
+        # end
 
         # Return a count that includes the soft-deleted models.
         def self.count_with_destroyed *args
