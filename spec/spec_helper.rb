@@ -1,5 +1,5 @@
 require 'yaml'
-require 'activerecord'
+require 'active_record'
 require 'is_paranoid'
 require 'stringio'
 
