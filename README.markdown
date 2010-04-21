@@ -62,4 +62,3 @@ Pitfalls
 
 * `validates_uniqueness_of` does not ignore items marked with a "deleted_at" flag
 * various eager-loading and associations-related issues (see ["Killing is_paranoid"](http://blog.semanticart.com/killing_is_paranoid/))
-* `find/count_with_destroyed` uses `with_exclusive_scope` and thus doesn't play nicely with named scopes

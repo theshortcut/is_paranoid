@@ -7,6 +7,9 @@ end
 class Android < ActiveRecord::Base
   validates_uniqueness_of :name
   is_paranoid
+  named_scope :ordered, :order => 'name DESC'
+  named_scope :r2d2, :conditions => { :name => 'R2D2' }
+  named_scope :c3p0, :conditions => { :name => 'C3P0' }
 end
 
 describe Android do
@@ -87,5 +90,15 @@ describe Android do
   it "should find only destroyed videos" do
     @r2d2.destroy
     Android.find_only_destroyed(:all).should == [@r2d2]
+  end
+
+  it "should honor named scopes" do
+    @r2d2.destroy
+    @c3p0.destroy
+    Android.r2d2.find_only_destroyed(:all).should == [@r2d2]
+    Android.c3p0.ordered.find_only_destroyed(:all).should == [@c3p0]
+    Android.ordered.find_only_destroyed(:all).should == [@r2d2,@c3p0]
+    Android.r2d2.c3p0.find_only_destroyed(:all).should == []
+    Android.find_only_destroyed(:all).should == [@r2d2,@c3p0]
   end
 end
