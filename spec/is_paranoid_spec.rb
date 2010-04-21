@@ -11,8 +11,8 @@ end
 
 describe Android do
   before(:each) do
-    Android.delete_all
-    Person.delete_all
+    Android.connection.execute 'DELETE FROM androids'
+    Person.connection.execute 'DELETE FROM people'
 
     @luke = Person.create(:name => 'Luke Skywalker')
     @r2d2 = Android.create(:name => 'R2D2', :owner_id => @luke.id)
