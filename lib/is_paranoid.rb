@@ -34,6 +34,11 @@ module IsParanoid
           self.with_destroyed_scope { count(*args) }
         end
 
+        # Perform a count only on destroyed instances.
+        def self.count_only_destroyed *args
+          self.with_only_destroyed_scope { count(*args) }
+        end
+
         # Return instances of all models matching the query regardless
         # of whether or not they have been soft-deleted.
         def self.find_with_destroyed *args
@@ -43,6 +48,17 @@ module IsParanoid
         # Perform a find only on destroyed instances.
         def self.find_only_destroyed *args
           self.with_only_destroyed_scope { find(*args) }
+        end
+
+        # Returns true if the requested record exists, even if it has
+        # been soft-deleted.
+        def self.exists_with_destroyed? *args
+          self.with_destroyed_scope { exists?(*args) }
+        end
+
+        # Returns true if the requested record has been soft-deleted.
+        def self.exists_only_destroyed? *args
+          self.with_only_destroyed_scope { exists?(*args) }
         end
 
         # Override the default destroy to allow us to flag deleted_at.
@@ -63,6 +79,11 @@ module IsParanoid
           self.deleted_at_will_change!
           self.deleted_at = nil
           update_without_callbacks
+        end
+
+        # Has this model been soft-deleted?
+        def destroyed?
+          super || !deleted_at.nil?
         end
         
         protected
