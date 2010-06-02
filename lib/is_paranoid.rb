@@ -103,26 +103,29 @@ module IsParanoid
         end
 
         def self.with_destroyed_scope
-          find = current_scoped_methods[:find]
+          scope = current_scoped_methods
 
-          if find[:conditions]
-            original = find[:conditions].dup
+          if scope[:find] and scope[:find][:conditions]
+            scope = scope.dup
+            scope[:find] = scope[:find].dup
+            conditions = scope[:find][:conditions] = scope[:find][:conditions].dup
+
+            case conditions
+            when Hash:
+              if conditions[:deleted_at].nil?
+                conditions.delete(:deleted_at)
+              end
+            when String:
+              c = sanitize_conditions(:deleted_at => nil)
+              conditions.gsub!(c, '1=1')
+            end
+
+            self.scoped_methods << scope
 
             begin
-              case find[:conditions]
-              when Hash:
-                if find[:conditions][:deleted_at].nil?
-                  find[:conditions].delete(:deleted_at)
-                end
-              when String:
-                conditions = sanitize_conditions(:deleted_at => nil)
-                find[:conditions].gsub!(conditions, '1=1')
-              end
-              
-              result = yield
+              yield
             ensure
-              find[:conditions] = original
-              return result if result
+              self.scoped_methods.pop
             end
           else
             yield
