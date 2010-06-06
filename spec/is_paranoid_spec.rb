@@ -17,9 +17,9 @@ describe Android do
     Android.connection.execute 'DELETE FROM androids'
     Person.connection.execute 'DELETE FROM people'
 
-    @luke = Person.create(:name => 'Luke Skywalker')
-    @r2d2 = Android.create(:name => 'R2D2', :owner_id => @luke.id)
-    @c3p0 = Android.create(:name => 'C3P0', :owner_id => @luke.id)
+    @luke = Person.create!(:name => 'Luke Skywalker')
+    @r2d2 = Android.create!(:name => 'R2D2', :owner_id => @luke.id)
+    @c3p0 = Android.create!(:name => 'C3P0', :owner_id => @luke.id)
   end
 
   it "should delete normally" do
