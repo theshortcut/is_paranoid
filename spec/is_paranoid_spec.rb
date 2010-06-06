@@ -101,4 +101,18 @@ describe Android do
     Android.r2d2.c3p0.find_only_destroyed(:all).should == []
     Android.find_only_destroyed(:all).should == [@r2d2,@c3p0]
   end
+
+  it "should restore the original scope when an exception occurs" do
+    @r2d2.destroy
+    count = Android.count
+
+    # Ensure the bug this test addresses hasn't leaked from other
+    # tests. This has actually happened!
+    count.should == 1
+
+    # This triggers the bug but I'm not entirely sure why.
+    Android.ordered.find_with_destroyed(:all) rescue nil
+
+    Android.count.should == count
+  end
 end
