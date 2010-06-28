@@ -105,7 +105,7 @@ module IsParanoid
         def self.with_destroyed_scope
           scope = current_scoped_methods
 
-          if scope[:find] and scope[:find][:conditions]
+          if scope.include?(:find) and scope[:find].include?(:conditions)
             scope = scope.dup
             scope[:find] = scope[:find].dup
             conditions = scope[:find][:conditions] = scope[:find][:conditions].dup
