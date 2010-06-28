@@ -110,7 +110,7 @@ module IsParanoid
             scope[:find] = scope[:find].dup
             conditions = scope[:find][:conditions] = scope[:find][:conditions].dup
 
-            case conditions
+            case conditions.class
             when Hash:
               if conditions[:deleted_at].nil?
                 conditions.delete(:deleted_at)
