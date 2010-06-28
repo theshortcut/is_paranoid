@@ -83,7 +83,7 @@ module IsParanoid
 
         # Has this model been soft-deleted?
         def destroyed?
-          super || !deleted_at.nil?
+          !deleted_at.nil?
         end
         
         protected
