@@ -67,10 +67,9 @@ module IsParanoid
         # the Model.destroy(id), we don't need to specify those methods
         # separately.
         def destroy
-          return false if callback(:before_destroy) == false
-          result = destroy_without_callbacks
-          callback(:after_destroy)
-          result
+          _run_destroy_callbacks do
+            destroy_without_callbacks
+          end
         end
 
         # Set deleted_at flag on a model to nil, effectively undoing the
