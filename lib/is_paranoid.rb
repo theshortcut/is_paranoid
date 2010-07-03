@@ -1,11 +1,10 @@
+require 'active_support/concern'
 require 'active_record'
 
 module IsParanoid
-  def self.included(base) # :nodoc:
-    base.extend SafetyNet
-  end
+  extend ActiveSupport::Concern
 
-  module SafetyNet
+  module ClassMethods
     # Call this in your model to enable all the safety-net goodness
     #
     #  Example:
@@ -72,6 +71,7 @@ module IsParanoid
           end
         end
 
+
         # Set deleted_at flag on a model to nil, effectively undoing the
         # soft-deletion.
         def restore
@@ -135,4 +135,4 @@ module IsParanoid
   end
 end
 
-ActiveRecord::Base.send(:include, IsParanoid)
+ActiveSupport.on_load(:active_record) { include IsParanoid }
