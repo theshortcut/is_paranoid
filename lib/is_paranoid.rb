@@ -18,7 +18,7 @@ module IsParanoid
         # append the conditions deleted_at => nil.  Exceptions require
         # using with_destroyed_scope (see self.delete_all,
         # self.count_with_destroyed, and self.find_with_destroyed )
-        default_scope :conditions => {:deleted_at => nil}
+        default_scope where(:deleted_at => nil)
 
         # Actually delete the model, bypassing the safety net.  Because
         # this method is called internally by Model.delete(id) and on the
