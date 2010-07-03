@@ -1,3 +1,16 @@
+Warning
+=======
+
+As stated in the git repository as the original author of this code:
+"This library is no longer supported or actively developed by the original author.
+It never made it to a 1.0 stable version. Use it at your own risk and write lots of tests."
+
+..So why I am trying to make it Rails 3 compatible? Well, I have an application which uses
+this code, and as I'd like to upgrade it to Rails 3 I guess I should keep this code base up
+to date too. But, you might want to think twice if you want to use this in your new and 
+shining Rails 3 application..
+
+
 Are you paranoid?
 =================
 
