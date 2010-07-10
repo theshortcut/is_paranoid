@@ -57,6 +57,14 @@ describe Android do
     Android.find_with_destroyed(:first, :conditions => {:name => 'R2D2'}).should_not be_blank
   end
 
+  it "should be able to find deleted items via destroyed scope" do
+    @r2d2.destroy
+    Android.where(:name => 'R2D2').first.should be_blank
+    Android.destroyed do
+      where(:name => 'R2D2').first.should_not be_blank
+    end
+  end
+
   it "should have a proper count inclusively and exclusively of deleted items" do
     @r2d2.destroy
     @c3p0.destroy
