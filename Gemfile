@@ -1,6 +1,6 @@
 source :rubygems
 
-gem 'bundler', '>= 1.0.0.beta.4'
+gem 'bundler', '>= 0.9.26'
 gem 'rake'
 gem 'activerecord', '>= 3.0.0.beta4'
 
