@@ -92,15 +92,36 @@ describe Android do
     Android.destroyed.all.should == [@r2d2]
   end
 
-  it "should honor named scopes" do
-    pending
-    @r2d2.destroy
-    @c3p0.destroy
-    Android.r2d2.find_only_destroyed(:all).should == [@r2d2]
-    Android.c3p0.ordered.find_only_destroyed(:all).should == [@c3p0]
-    Android.ordered.find_only_destroyed(:all).should == [@r2d2,@c3p0]
-    Android.r2d2.c3p0.find_only_destroyed(:all).should == []
-    Android.find_only_destroyed(:all).should == [@r2d2,@c3p0]
+  describe "scopes" do
+    before do
+      @r2d2.destroy
+      @c3p0.destroy
+    end
+
+    it "should only find r2d2 through it's scope" do
+      pending
+      Android.destroyed.r2d2.should == [@r2d2]
+    end
+
+    it "should only find c3p0 through it's scope" do
+      pending
+      Android.c3p0.ordered.destroyed.should == [@c3p0]
+    end
+
+    it "should fint both r2d2 and c3p0 in correct order" do
+      pending
+      Android.ordered.destroyed.should == [@r2d2, @c3p0]
+    end
+
+    it "should not find any destroyed if scopes added makes SQL hit non of them" do
+      pending
+      Android.r2d2.c3p0.destroyed.should == []
+    end
+
+    it "should include both r2d2 and c3p0" do
+      pending
+      Android.destroy.should == [@r2d2, @c3p0]
+    end
   end
 
   it "should restore the original scope when an exception occurs" do

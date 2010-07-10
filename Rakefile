@@ -1,16 +1,8 @@
-require 'rubygems'
-require 'rake'
 require 'bundler'
-
 Bundler.setup
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new do |t|
-  t.ruby_opts = ['-rubygems']
-  t.libs = ['lib', 'spec']
-  t.spec_opts = ['--color']
-  t.spec_files = FileList['spec/**/*_spec.rb']
-end
+require "rspec/core/rake_task"
+RSpec::Core::RakeTask.new(:spec)
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
