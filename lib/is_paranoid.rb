@@ -51,11 +51,6 @@ module IsParanoid
           def find_with_destroyed *args
             unscoped.find(*args)
           end
-          
-          # Perform a find only on destroyed instances.
-          def find_only_destroyed *args
-            destroyed.find(*args)
-          end
 
           # Returns true if the requested record exists, even if it has
           # been soft-deleted.

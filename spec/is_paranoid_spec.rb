@@ -89,7 +89,7 @@ describe Android do
   
   it "should find only destroyed videos" do
     @r2d2.destroy
-    Android.find_only_destroyed(:all).should == [@r2d2]
+    Android.destroyed.all.should == [@r2d2]
   end
 
   it "should honor named scopes" do
