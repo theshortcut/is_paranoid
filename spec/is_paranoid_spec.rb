@@ -7,9 +7,9 @@ end
 class Android < ActiveRecord::Base
   validates_uniqueness_of :name
   is_paranoid
-  named_scope :ordered, :order => 'name DESC'
-  named_scope :r2d2, :conditions => { :name => 'R2D2' }
-  named_scope :c3p0, :conditions => { :name => 'C3P0' }
+  scope :ordered, :order => 'name DESC'
+  scope :r2d2, :conditions => { :name => 'R2D2' }
+  scope :c3p0, :conditions => { :name => 'C3P0' }
 end
 
 describe Android do
