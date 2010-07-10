@@ -67,7 +67,7 @@ Extra class methods provided by this plugin are:
 
 1. `Model.count_with_destroyed(*args)`
 2. `Model.find_with_destroyed(*args)`
-2. `Model.destroyed` # Returns all destroyed, may be chained with where() etc.
+2. `Model.destroyed` # Returns all destroyed, accepts a block with where() etc. See spec for examples.
 
 
 Pitfalls
