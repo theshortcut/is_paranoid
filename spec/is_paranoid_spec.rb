@@ -148,4 +148,19 @@ describe Android do
 
     Android.count.should == count
   end
+
+  describe "invalid object" do
+    before do
+      @r2d2.stub!(:valid?).and_return false
+    end
+
+    it "should be able to be destroyed" do
+      lambda { @r2d2.destroy }.should change(Android, :count).by(-1)
+    end
+
+    it "should be able to be restored" do
+      @r2d2.destroy
+      lambda { @r2d2.restore }.should change(Android, :count).by(1)
+    end
+  end
 end

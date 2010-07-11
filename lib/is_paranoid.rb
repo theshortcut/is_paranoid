@@ -87,7 +87,7 @@ module IsParanoid
         def restore
           self.deleted_at_will_change!
           self.deleted_at = nil
-          save :callbacks => false
+          save :callbacks => false, :validate => false
         end
 
         # Has this model been soft-deleted?
@@ -100,7 +100,7 @@ module IsParanoid
           # Mark the model deleted_at as now.
           def destroy_without_callbacks
             self.deleted_at = current_time_from_proper_timezone
-            save :callbacks => false
+            save :callbacks => false, :validate => false
           end
       end
     end
