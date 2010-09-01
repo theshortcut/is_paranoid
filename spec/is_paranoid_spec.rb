@@ -12,6 +12,31 @@ class Android < ActiveRecord::Base
   scope :c3p0, :conditions => { :name => 'C3P0' }
 end
 
+class AndroidObserver < ActiveRecord::Observer
+  observe Android
+  @@destroy_count = 0
+  @@update_count = 0
+
+  def self.destroy_count
+    @@destroy_count
+  end
+
+  def self.update_count
+    @@update_count
+  end
+
+  def after_destroy(android)
+    @@destroy_count += 1
+  end
+
+  def after_update(android)
+    @@update_count += 1
+  end
+end
+
+ActiveRecord::Base.observers = AndroidObserver
+ActiveRecord::Base.instantiate_observers
+
 describe Android do
   before(:each) do
     Android.connection.execute 'DELETE FROM androids'
@@ -94,7 +119,7 @@ describe Android do
       Android.create!(:name => 'R2D2')
     }.should raise_error(ActiveRecord::RecordInvalid)
   end
-  
+
   it "should find only destroyed videos" do
     @r2d2.destroy
     Android.destroyed.all.should == [@r2d2]
@@ -161,6 +186,16 @@ describe Android do
     it "should be able to be restored" do
       @r2d2.destroy
       lambda { @r2d2.restore }.should change(Android, :count).by(1)
+    end
+  end
+
+  describe "callbacks" do
+    it "should call after_destroy" do
+      lambda { @r2d2.destroy }.should change(AndroidObserver, :destroy_count).by(1)
+    end
+
+    it "should not call after_update" do
+      lambda { @r2d2.destroy }.should_not change(AndroidObserver, :update_count)
     end
   end
 end
