@@ -85,10 +85,12 @@ module IsParanoid
           !deleted_at.nil?
         end
 
-        def set_deleted_at(value)
-          self.class.update_all({:deleted_at => value}, {:id => self.id})
-          self.deleted_at = value
-        end
+        protected
+
+          def set_deleted_at(value)
+            self.class.update_all({:deleted_at => value}, {:id => self.id})
+            self.deleted_at = value
+          end
       end
     end
   end
