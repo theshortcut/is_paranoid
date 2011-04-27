@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
     "spec/is_paranoid_spec.rb",
     "spec/spec_helper.rb",
   ]
-  s.has_rdoc = true
   s.homepage = %q{http://github.com/jchupp/is_paranoid/}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
